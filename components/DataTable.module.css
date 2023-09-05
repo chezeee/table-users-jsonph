@@ -1,0 +1,17 @@
+.tableWrapper table {
+  margin: 50px auto;
+  border-collapse: collapse;
+  
+}
+
+.tHeadStyle th{
+  color: rgb(81, 24, 24);
+  text-align: center;
+  border: 1px solid black;
+  padding: 5px 5px;
+}
+
+.tBodyStyle td {
+  border: 1px solid black;
+  padding: 5px 5px;
+}
