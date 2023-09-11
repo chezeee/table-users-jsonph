@@ -1,6 +1,7 @@
 .tableWrapper table {
   margin: 0 auto;
   border-collapse: collapse;
+  width: 1200px;
 }
 
 .tHeadStyle th{
