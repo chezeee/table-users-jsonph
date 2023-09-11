@@ -1,9 +1,9 @@
-import FetchUsers from '../components/FetchUsers';
+import UsersList from '../components/UsersList';
 
 export default function Home() {
   return (
-    <section>
-      <FetchUsers path="/users" />
+    <section className="mainContainer">
+      <UsersList path="/users" />
     </section>
   );
 }

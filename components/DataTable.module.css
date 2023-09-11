@@ -1,7 +1,6 @@
 .tableWrapper table {
-  margin: 50px auto;
+  margin: 0 auto;
   border-collapse: collapse;
-  
 }
 
 .tHeadStyle th{
@@ -14,4 +13,12 @@
 .tBodyStyle td {
   border: 1px solid black;
   padding: 5px 5px;
+}
+
+.userRow {
+  cursor: pointer;
+}
+
+.userRow:hover {
+  background-color: rgb(238, 238, 238);
 }
