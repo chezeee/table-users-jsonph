@@ -1,29 +1,10 @@
-import { useState } from 'react';
 import css from './DataTable.module.css';
-import DataInfo from './DataInfo';
-import DataPosts from './DataPosts';
-import OnMountFetch from './OnMountFetch';
-import { fetchWrapper } from '../data-fetch/fetchWrapper';
 
-export default function DataTable({ users }) {
-  const [userId, setUserId] = useState(null),
-    [displayPosts, setDisplayPosts] = useState(null),
-    showPostsClick = () => {
-      console.log('Posts render');
-      setDisplayPosts('_');
-    };
-
-  function UserInfoComponent({ data }) {
-    return (
-      <DataInfo user={data} onClick={showPostsClick} />
-    );
-  }
-
-  function UserPostsComponent({ data }) {
-    return <DataPosts posts={data} userId={userId} />;
-  }
-  console.log('DataTable render', users);
-
+export default function DataTable({
+  users,
+  showUserInfoClick,
+}) {
+  console.count('Table render');
   return (
     <>
       <div className={css.tableWrapper}>
@@ -55,10 +36,7 @@ export default function DataTable({ users }) {
                 <tr
                   key={id}
                   className={css.userRow}
-                  onClick={() => {
-                    setUserId(id);
-                    setDisplayPosts(null);
-                  }}
+                  onClick={() => showUserInfoClick(id)}
                 >
                   <td>{id}</td>
                   <td>{name}</td>
@@ -79,20 +57,6 @@ export default function DataTable({ users }) {
           </tbody>
         </table>
       </div>
-
-      <OnMountFetch
-        fetchWrap={fetchWrapper}
-        path={`/users/${userId}`}
-        ComponentName={UserInfoComponent}
-        isActive={userId}
-      />
-
-      <OnMountFetch
-        fetchWrap={fetchWrapper}
-        path={`/users/${userId}/posts`}
-        ComponentName={UserPostsComponent}
-        isActive={displayPosts}
-      />
     </>
   );
 }

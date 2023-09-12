@@ -1,6 +1,8 @@
 import css from './DataPosts.module.css';
 
 export default function DataPosts({ posts, userId }) {
+  console.count('Posts render');
+
   return (
     <fieldset className={css.fieldView}>
       <h2>{`Posts by user №${userId}`}</h2>

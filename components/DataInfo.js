@@ -1,7 +1,7 @@
 import css from './DataInfo.module.css';
 import ShowPostsBtn from './ShowPostsBtn';
 
-export default function DataInfo({ user, onClick }) {
+export default function DataInfo({ user, showPostsClick }) {
   const {
     id,
     name: fName,
@@ -19,6 +19,7 @@ export default function DataInfo({ user, onClick }) {
     company: { name: cName, catchPhrase, bs },
   } = user;
 
+  console.count('DataInfo render');
   return (
     <fieldset className={css.flexField}>
       <div className={css.infoUserContainer}>
@@ -32,7 +33,10 @@ export default function DataInfo({ user, onClick }) {
         <div>{`Website: ${website}`}</div>
         <div>{`Company: ${cName}, ${catchPhrase}, ${bs}`}</div>
       </div>
-      <ShowPostsBtn text="Show posts" onClick={onClick} />
+      <ShowPostsBtn
+        text="Show posts"
+        onClick={showPostsClick}
+      />
     </fieldset>
   );
 }

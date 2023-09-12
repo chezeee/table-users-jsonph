@@ -26,7 +26,6 @@ export default function OnMountFetch({
   }
 
   if (data && isActive) {
-    console.count('OnMountFetch render');
     return <ComponentName data={data} />;
   }
 }
