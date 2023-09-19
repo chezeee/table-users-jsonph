@@ -1,5 +1,6 @@
 import css from './DataTable.module.css';
 import ActionBtn from './ActionBtn';
+import { useState } from 'react';
 
 export default function DataTable({
   users,
@@ -7,13 +8,27 @@ export default function DataTable({
   sortDirection,
   columns,
 }) {
-  console.count('Table render');
-  console.log('sortDirection: ', sortDirection);
+  const [filterStr, setFilterStr] = useState('');
+
+  function filterDataFn(elem) {
+    if (!filterStr) return true;
+    return columns
+      .map(({ getDataVal }) => getDataVal(elem))
+      .filter((x) => 'string' === typeof x)
+      .some((x) =>
+        x.toLowerCase().includes(filterStr.toLowerCase())
+      );
+  }
+
   return (
     <>
-      <div
-        className={css.tableWrapper}
-      >
+      <div className={css.tableWrapper}>
+        <input
+          value={filterStr}
+          onInput={(event) =>
+            setFilterStr(event.target.value)
+          }
+        />
         <table>
           <thead className={css.tHeadStyle}>
             <tr>
@@ -37,7 +52,7 @@ export default function DataTable({
             </tr>
           </thead>
           <tbody className={css.tBodyStyle}>
-            {users.map((user) => (
+            {users.filter(filterDataFn).map((user) => (
               <tr key={user.id}>
                 {columns.map(({ title, getDataVal }) => (
                   <td key={title}>{getDataVal(user)}</td>

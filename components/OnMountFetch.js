@@ -56,7 +56,6 @@ export default function OnMountFetch({
           }
           return 0;
         });
-      console.log('sorted', sorted);
 
       if (newSortNumber < 0) {
         sorted.reverse();

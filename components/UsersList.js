@@ -16,7 +16,6 @@ export default function UsersList({ path }) {
     showPostsClick = () => {
       setDisplayPosts('_');
     };
-  console.log('DisplayPosts', displayPosts);
 
   function UsersTableComponent({
     data,
