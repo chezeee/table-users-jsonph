@@ -1,59 +1,63 @@
 import css from './DataTable.module.css';
+import ActionBtn from './ActionBtn';
 
 export default function DataTable({
   users,
-  showUserInfoClick,
+  dataUpdateFn,
+  sortDirection,
+  columns,
 }) {
   console.count('Table render');
+  console.log('sortDirection: ', sortDirection);
   return (
     <>
-      <div className={css.tableWrapper}>
+      <div
+        className={css.tableWrapper}
+      >
         <table>
           <thead className={css.tHeadStyle}>
             <tr>
-              <th>№:</th>
-              <th>Name:</th>
-              <th>Email:</th>
-              <th>City:</th>
-              <th>Phone number:</th>
-              <th>Website:</th>
-              <th>Company name:</th>
+              {columns.map(({ title }, index) => (
+                <th
+                  key={title}
+                  onClick={dataUpdateFn}
+                  className={[
+                    index === Math.abs(sortDirection) - 1
+                      ? css.sort
+                      : '',
+                    index === Math.abs(sortDirection) - 1 &&
+                    sortDirection < 0
+                      ? css.desc
+                      : '',
+                  ].join(' ')}
+                >
+                  {title}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody className={css.tBodyStyle}>
-            {users.map((user) => {
-              const {
-                id,
-                name,
-                email,
-                address: { city },
-                phone,
-                website,
-                company: { name: cName },
-              } = user;
-
-              return (
-                <tr
-                  key={id}
-                  className={css.userRow}
-                  onClick={() => showUserInfoClick(id)}
-                >
-                  <td>{id}</td>
-                  <td>{name}</td>
-                  <td>
-                    <a href={`mailto:${email}`}>{email}</a>
-                  </td>
-                  <td>{city}</td>
-                  <td>
-                    <a href={`tel:${phone}`}>{phone}</a>
-                  </td>
-                  <td>
-                    <a href={`${website}`}>{website}</a>
-                  </td>
-                  <td>{cName}</td>
-                </tr>
-              );
-            })}
+            {users.map((user) => (
+              <tr key={user.id}>
+                {columns.map(({ title, getDataVal }) => (
+                  <td key={title}>{getDataVal(user)}</td>
+                ))}
+                <td className={css.tdBtnsWrapper}>
+                  <ActionBtn
+                    text="ℹ️"
+                    id={user.id}
+                    action={'info'}
+                    onClick={dataUpdateFn}
+                  />
+                  <ActionBtn
+                    text="❌"
+                    id={user.id}
+                    action={'delete'}
+                    onClick={dataUpdateFn}
+                  />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

@@ -2,8 +2,9 @@ import { useState } from 'react';
 import DataTable from './DataTable';
 import DataInfo from './DataInfo';
 import DataPosts from './DataPosts';
-import { fetchWrapper } from '../data-fetch/fetchWrapper';
+import { fetchWrapper } from './data-fetch/fetchWrapper';
 import OnMountFetch from './OnMountFetch';
+import { columns } from './data-type/users';
 
 export default function UsersList({ path }) {
   const [userId, setUserId] = useState(null),
@@ -15,19 +16,27 @@ export default function UsersList({ path }) {
     showPostsClick = () => {
       setDisplayPosts('_');
     };
+  console.log('DisplayPosts', displayPosts);
 
-  function UsersTableComponent({ data }) {
+  function UsersTableComponent({
+    data,
+    dataUpdateFn,
+    sortDirection,
+    columns,
+  }) {
     return (
       <DataTable
         users={data}
-        showUserInfoClick={showUserInfoClick}
+        dataUpdateFn={dataUpdateFn}
+        sortDirection={sortDirection}
+        columns={columns}
       />
     );
   }
 
-  function UserInfoComponent({ data }) {
+  function UserInfoComponent({ data, dataUpdateFn }) {
     return (
-      <DataInfo user={data} showPostsClick={showPostsClick} />
+      <DataInfo user={data} dataUpdateFn={dataUpdateFn} />
     );
   }
 
@@ -41,6 +50,8 @@ export default function UsersList({ path }) {
         fetchWrap={fetchWrapper}
         path={path}
         ComponentName={UsersTableComponent}
+        onClick={showUserInfoClick}
+        columns={columns}
       />
 
       <OnMountFetch
@@ -48,6 +59,7 @@ export default function UsersList({ path }) {
         path={`/users/${userId}`}
         ComponentName={UserInfoComponent}
         isActive={userId}
+        onClick={showPostsClick}
       />
 
       <OnMountFetch

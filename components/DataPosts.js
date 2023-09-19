@@ -5,7 +5,7 @@ export default function DataPosts({ posts, userId }) {
 
   return (
     <fieldset className={css.fieldView}>
-      <h2>{`Posts by user №${userId}`}</h2>
+      <h2>{`Posts by User #${userId}`}</h2>
       <div className={css.flexField}>
         {posts.map((post) => {
           const { id, title, body } = post;

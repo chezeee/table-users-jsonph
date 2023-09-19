@@ -1,7 +1,7 @@
 import css from './DataInfo.module.css';
 import ShowPostsBtn from './ShowPostsBtn';
 
-export default function DataInfo({ user, showPostsClick }) {
+export default function DataInfo({ user, dataUpdateFn }) {
   const {
     id,
     name: fName,
@@ -23,7 +23,7 @@ export default function DataInfo({ user, showPostsClick }) {
   return (
     <fieldset className={css.flexField}>
       <div className={css.infoUserContainer}>
-        <h2>{`User №${id}`}</h2>
+        <h2>{`User #${id}`}</h2>
         <div>{`Name: ${fName}`}</div>
         <div>{`Username: ${username}`}</div>
         <div>{`Email: ${email}`}</div>
@@ -35,7 +35,9 @@ export default function DataInfo({ user, showPostsClick }) {
       </div>
       <ShowPostsBtn
         text="Show posts"
-        onClick={showPostsClick}
+        id={id}
+        action="post"
+        onClick={dataUpdateFn}
       />
     </fieldset>
   );

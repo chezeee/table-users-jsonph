@@ -1,15 +1,15 @@
-import css from './ShowPostsBtn.module.css';
+import css from './ActionBtn.module.css';
 
-export default function ShowPostsBtn({
+export default function ActionBtn({
   id,
   text,
   action,
   onClick,
 }) {
-  console.count('ShowPosts-button render');
+  // console.count('ActionBtn render');
   return (
     <button
-      className={css.postsShowBtn}
+      className={css.userRowBtn}
       data-id={id}
       data-action={action}
       onClick={onClick}
