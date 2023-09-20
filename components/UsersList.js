@@ -5,6 +5,7 @@ import DataPosts from './DataPosts';
 import { fetchWrapper } from './data-fetch/fetchWrapper';
 import OnMountFetch from './OnMountFetch';
 import { columns } from './data-type/users';
+import EditForm from './EditForm';
 
 export default function UsersList({ path }) {
   const [userId, setUserId] = useState(null),
@@ -22,6 +23,9 @@ export default function UsersList({ path }) {
     dataUpdateFn,
     sortDirection,
     columns,
+    editedId,
+    setValues,
+    editedValues
   }) {
     return (
       <DataTable
@@ -29,7 +33,15 @@ export default function UsersList({ path }) {
         dataUpdateFn={dataUpdateFn}
         sortDirection={sortDirection}
         columns={columns}
-      />
+        editedId={editedId}
+      >
+        <EditForm
+          columns={columns}
+          dataUpdateFn={dataUpdateFn}
+          setValues={setValues}
+          editedValues={editedValues}
+        />
+      </DataTable>
     );
   }
 

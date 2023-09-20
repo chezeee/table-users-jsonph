@@ -7,6 +7,8 @@ export default function DataTable({
   dataUpdateFn,
   sortDirection,
   columns,
+  editedId,
+  children,
 }) {
   const [filterStr, setFilterStr] = useState('');
 
@@ -53,27 +55,44 @@ export default function DataTable({
           </thead>
           <tbody className={css.tBodyStyle}>
             {users.filter(filterDataFn).map((user) => (
-              <tr key={user.id}>
-                {columns.map(({ title, getDataVal }) => (
-                  <td key={title}>{getDataVal(user)}</td>
-                ))}
-                <td className={css.tdBtnsWrapper}>
-                  <ActionBtn
-                    text="ℹ️"
-                    id={user.id}
-                    action={'info'}
-                    onClick={dataUpdateFn}
-                  />
-                  <ActionBtn
-                    text="❌"
-                    id={user.id}
-                    action={'delete'}
-                    onClick={dataUpdateFn}
-                  />
-                </td>
-              </tr>
+              <>
+                {String(user.id) === String(editedId) ? (
+                  <>{children}</>
+                ) : (
+                  <tr key={user.id}>
+                    {columns.map(
+                      ({ title, getDataVal }) => (
+                        <td key={title}>
+                          {getDataVal(user)}
+                        </td>
+                      )
+                    )}
+                    <td>
+                      <ActionBtn
+                        text="ℹ️"
+                        id={user.id}
+                        action={'info'}
+                        onClick={dataUpdateFn}
+                      />
+                      <ActionBtn
+                        text="✏️"
+                        id={user.id}
+                        action={'edit'}
+                        onClick={dataUpdateFn}
+                      />
+                      <ActionBtn
+                        text="❌"
+                        id={user.id}
+                        action={'delete'}
+                        onClick={dataUpdateFn}
+                      />
+                    </td>
+                  </tr>
+                )}
+              </>
             ))}
           </tbody>
+          {!editedId && <tfoot>{children}</tfoot>}
         </table>
       </div>
     </>

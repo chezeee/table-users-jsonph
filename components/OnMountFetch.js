@@ -10,7 +10,13 @@ export default function OnMountFetch({
 }) {
   const [data, setData] = useState(null),
     [error, setError] = useState(null),
-    [sortDirection, setSortDirection] = useState(null);
+    [sortDirection, setSortDirection] = useState(null),
+    [editedId, setEditedId] = useState(null),
+    [values, setValues] = useState(columns.map(() => '_'));
+
+  function setNewValues(values) {
+    setValues(values);
+  }
 
   function dataUpdateFn(event) {
     const eventSource = event.target.closest(
@@ -31,6 +37,45 @@ export default function OnMountFetch({
         case 'post':
           onClick();
           return;
+        case 'edit':
+          setEditedId(id);
+          const index = data.findIndex(
+            (obj) => String(obj.id) === String(id)
+          );
+          setValues(
+            columns.map(({ setDataVal, getDataVal }) =>
+              setDataVal ? getDataVal(data[index]) : ''
+            )
+          );
+          return;
+
+        case 'cancel':
+          setEditedId(null);
+          return;
+        case 'ok':
+          if (editedId) {
+            const newObj = data[editedId];
+            columns.forEach(({ setDataVal }, index) => {
+              Object.assign(
+                newObj,
+                setDataVal?.(values[index])
+              );
+            });
+          } else {
+            const newObj = {
+              id: data.length + 1,
+              address: {},
+              company: {},
+            };
+            columns.forEach(({ setDataVal }, index) => {
+              Object.assign(
+                newObj,
+                setDataVal?.(values[index])
+              );
+            });
+            setData(data.concat(newObj));
+          }
+          setEditedId(null);
       }
       return;
     }
@@ -88,6 +133,9 @@ export default function OnMountFetch({
         dataUpdateFn={dataUpdateFn}
         sortDirection={sortDirection}
         columns={columns}
+        editedId={editedId}
+        setValues={setNewValues}
+        editedValues={values}
       />
     );
   }
