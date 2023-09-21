@@ -1,7 +1,8 @@
 .editRow td:last-child{
   display:flex;
   gap: 5px;
-  justify-content: space-between;
+  padding: 5px;
+  justify-content: center;
   border: 0;
 }
 

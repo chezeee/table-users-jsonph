@@ -7,12 +7,13 @@ export default function OnMountFetch({
   isActive = '_',
   onClick,
   columns = [],
+  hideInfoWindow,
 }) {
   const [data, setData] = useState(null),
     [error, setError] = useState(null),
     [sortDirection, setSortDirection] = useState(null),
     [editedId, setEditedId] = useState(null),
-    [values, setValues] = useState(columns.map(() => '_'));
+    [values, setValues] = useState(columns.map(() => ''));
 
   function setNewValues(values) {
     setValues(values);
@@ -31,8 +32,11 @@ export default function OnMountFetch({
           return;
         case 'delete':
           setData((oldData) =>
-            oldData.filter((el) => +el.id !== +id)
+            oldData.filter(
+              (el) => String(el.id) !== String(id)
+            )
           );
+          hideInfoWindow();
           return;
         case 'post':
           onClick();
@@ -47,20 +51,27 @@ export default function OnMountFetch({
               setDataVal ? getDataVal(data[index]) : ''
             )
           );
+          hideInfoWindow();
           return;
 
         case 'cancel':
           setEditedId(null);
+          setValues(columns.map(() => ''));
+          hideInfoWindow();
           return;
         case 'ok':
           if (editedId) {
-            const newObj = data[editedId];
-            columns.forEach(({ setDataVal }, index) => {
+            const index = data.findIndex(
+                (obj) => String(obj.id) === String(editedId)
+              ),
+              newObj = { ...data[index] };
+            columns.forEach(({ setDataVal }, i) => {
               Object.assign(
                 newObj,
-                setDataVal?.(values[index])
+                setDataVal?.(values[i])
               );
             });
+            setData((old) => old.with(index, newObj));
           } else {
             const newObj = {
               id: data.length + 1,
@@ -76,6 +87,8 @@ export default function OnMountFetch({
             setData(data.concat(newObj));
           }
           setEditedId(null);
+          setValues(columns.map(() => ''));
+          hideInfoWindow();
       }
       return;
     }

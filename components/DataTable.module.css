@@ -1,3 +1,9 @@
+.searchForm {
+  width: 35%;
+  border: 1px solid grey;
+  margin-bottom: 10px;
+}
+
 .tableWrapper table {
   margin: 0 auto;
   border-collapse: collapse;
@@ -34,4 +40,8 @@
   gap: 5px;
   justify-content: space-between;
   border: 0;
+}
+
+.editForm td{
+  min-height: 50px;
 }

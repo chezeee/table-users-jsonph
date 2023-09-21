@@ -10,24 +10,22 @@ export default function EditForm({
 }) {
   return (
     <tr className={css.editRow}>
-      {columns.map(
-        ({ title, getDataVal, setDataVal }, index) => (
-          <td key={title}>
-            {setDataVal ? (
-              <input
-                value={editedValues[index]}
-                onInput={(event) => {
-                  setValues((old) =>
-                    old.with(index, event.target.value)
-                  );
-                }}
-              />
-            ) : (
-              'Data is not editable'
-            )}
-          </td>
-        )
-      )}
+      {columns.map(({ title, setDataVal }, index) => (
+        <td key={title}>
+          {setDataVal ? (
+            <input
+              value={editedValues[index]}
+              onInput={(event) => {
+                setValues((old) =>
+                  old.with(index, event.target.value)
+                );
+              }}
+            />
+          ) : (
+            'Uneditable data'
+          )}
+        </td>
+      ))}
       <td>
         <ActionBtn
           text="✔️"

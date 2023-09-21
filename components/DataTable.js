@@ -7,6 +7,7 @@ export default function DataTable({
   dataUpdateFn,
   sortDirection,
   columns,
+  hideInfoWindow,
   editedId,
   children,
 }) {
@@ -26,10 +27,13 @@ export default function DataTable({
     <>
       <div className={css.tableWrapper}>
         <input
+          className={css.searchForm}
           value={filterStr}
-          onInput={(event) =>
-            setFilterStr(event.target.value)
-          }
+          onInput={(event) => {
+            setFilterStr(event.target.value);
+            hideInfoWindow();
+          }}
+          placeholder="Start typing to search"
         />
         <table>
           <thead className={css.tHeadStyle}>
@@ -61,9 +65,9 @@ export default function DataTable({
                 ) : (
                   <tr key={user.id}>
                     {columns.map(
-                      ({ title, getDataVal }) => (
+                      ({ title, getFullData }) => (
                         <td key={title}>
-                          {getDataVal(user)}
+                          {getFullData(user)}
                         </td>
                       )
                     )}
@@ -92,7 +96,11 @@ export default function DataTable({
               </>
             ))}
           </tbody>
-          {!editedId && <tfoot>{children}</tfoot>}
+          {!editedId && (
+            <tfoot className={css.editForm}>
+              {children}
+            </tfoot>
+          )}
         </table>
       </div>
     </>

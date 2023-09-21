@@ -16,6 +16,9 @@ export default function UsersList({ path }) {
     },
     showPostsClick = () => {
       setDisplayPosts('_');
+    },
+    hideInfoWindow = () => {
+      setUserId(null);
     };
 
   function UsersTableComponent({
@@ -25,7 +28,7 @@ export default function UsersList({ path }) {
     columns,
     editedId,
     setValues,
-    editedValues
+    editedValues,
   }) {
     return (
       <DataTable
@@ -33,6 +36,7 @@ export default function UsersList({ path }) {
         dataUpdateFn={dataUpdateFn}
         sortDirection={sortDirection}
         columns={columns}
+        hideInfoWindow={hideInfoWindow}
         editedId={editedId}
       >
         <EditForm
@@ -63,6 +67,7 @@ export default function UsersList({ path }) {
         ComponentName={UsersTableComponent}
         onClick={showUserInfoClick}
         columns={columns}
+        hideInfoWindow={hideInfoWindow}
       />
 
       <OnMountFetch

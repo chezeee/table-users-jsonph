@@ -1,42 +1,59 @@
 export const columns = [
   {
     title: '#:',
+    getFullData: ({ id }) => id,
     getDataVal: ({ id }) => id,
     setDataVal: (id) => ({ id }),
   },
   {
     title: 'Name:',
+    getFullData: ({ name: fName }) => fName,
     getDataVal: ({ name: fName }) => fName,
     setDataVal: (name) => ({ name }),
   },
   {
     title: 'Email:',
-    getDataVal: ({ email }) => (
+    getFullData: ({ email }) => (
       <a href={`mailto:${email}`}>{email}</a>
     ),
-    // setDataVal: (email) => ({ email }),
+    getDataVal: ({ email }) => email,
+    setDataVal: (email) => ({ email }),
   },
   {
     title: 'Address:',
-    getDataVal: ({ address: { street, suite, city } }) =>
+    getFullData: ({ address: { street, suite, city } }) =>
       `${city}, ${street}, ${suite}`,
+    getDataVal: ({ address: { city } }) => city,
+    // setDataVal: (city) => ({
+    //   getFullData: {
+    //     address: {
+    //       city,
+    //     },
+    //   },
+    // }),
   },
   {
     title: 'Phone number:',
-    getDataVal: ({ phone }) => (
+    getFullData: ({ phone }) => (
       <a href={`tel:${phone}`}>{phone}</a>
     ),
-    // setDataVal: (phone) => ({ phone }),
+    getDataVal: ({ phone }) => phone,
+    setDataVal: (phone) => ({ phone }),
   },
   {
     title: 'Website:',
-    getDataVal: ({ website }) => (
+    getFullData: ({ website }) => (
       <a href={`https://${website}`}>{website}</a>
     ),
-    // setDataVal: (website) => ({ website }),
+    getDataVal: ({ website }) => website,
+    setDataVal: (website) => ({ website }),
   },
   {
     title: 'Company name:',
+    getFullData: ({ company: { name: cName } }) => cName,
     getDataVal: ({ company: { name: cName } }) => cName,
+    // setDataVal: (cName) => {
+    //   cName;
+    // },
   },
 ];
