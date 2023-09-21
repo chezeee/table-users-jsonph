@@ -1,6 +1,6 @@
 import css from './DataTable.module.css';
 import ActionBtn from './ActionBtn';
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 
 export default function DataTable({
   users,
@@ -59,7 +59,7 @@ export default function DataTable({
           </thead>
           <tbody className={css.tBodyStyle}>
             {users.filter(filterDataFn).map((user) => (
-              <>
+              <Fragment key={user.id}>
                 {String(user.id) === String(editedId) ? (
                   <>{children}</>
                 ) : (
@@ -93,7 +93,7 @@ export default function DataTable({
                     </td>
                   </tr>
                 )}
-              </>
+              </Fragment>
             ))}
           </tbody>
           {!editedId && (

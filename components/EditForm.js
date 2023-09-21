@@ -20,6 +20,7 @@ export default function EditForm({
                   old.with(index, event.target.value)
                 );
               }}
+              placeholder={title}
             />
           ) : (
             'Uneditable data'
